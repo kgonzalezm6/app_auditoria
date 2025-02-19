@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Login from '@/views/Login.vue'; // Asegúrate de que el path sea correcto
 import Home from '@/views/Home.vue';   // Asegúrate de que el path sea correcto
-
+import Change from '@/views/ChangePassword.vue'
 const router = createRouter({
-  history: createWebHistory(import.meta.env.VITE_MY_URL), // Usa el valor configurado en tu entorno
+  history: createWebHistory(import.meta.env.VITE_MY_BASE), // Usa el valor configurado en tu entorno
   routes: [
     {
       path: '/login',
@@ -14,6 +14,12 @@ const router = createRouter({
       path: '/',
       name: 'Home',
       component: Home,
+      meta: { requiresAuth: true }, // Agregas protección para rutas que necesitan autenticación
+    },
+    {
+      path: '/change_password',
+      name: 'Change',
+      component: Change,
       meta: { requiresAuth: true }, // Agregas protección para rutas que necesitan autenticación
     },
   ],

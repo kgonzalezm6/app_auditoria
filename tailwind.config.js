@@ -10,6 +10,8 @@ module.exports = {
         'green-muni' : '#00bc70',
         'blue-muni' : '#1700a5',
         'lime-muni' : '#97d700',
+        'blue-kev' : '#001489',
+        'sky-kev' : '#bfd8ff',
       },
       boxShadow: {
         'all': '0 10px 15px -5px rgb(0 0 0 / 0.1), 0 -10px 15px -5px rgb(0 0 0 / 0.1), 10px 0 15px -5px rgb(0 0 0 / 0.1), -10px 0 15px -5px rgb(0 0 0 / 0.1)',

@@ -1,7 +1,7 @@
 <template>
-    <div class="font-[sans-serif] max-w-7xl mx-auto h-screen">
+    <div v-if="!store.loading_login" class="font-[sans-serif] max-w-7xl mx-auto h-screen">
       <div class="grid md:grid-cols-2 items-center gap-8 h-full">
-        <form class="max-w-lg max-md:mx-auto w-full p-6" @submit.prevent="handleSubmit">
+        <form class="max-w-lg max-md:mx-auto w-full p-6" @submit.prevent="store.login()">
           <!-- <img src="/src/assets/img/logo.png" alt="" srcset="" class="w-[50%]"> -->
           <div class="mb-12">
             <h3 class="text-gray-800 text-4xl font-bold text-center">Iniciar Sesión</h3>
@@ -11,7 +11,7 @@
           <div>
             <label class="text-gray-800 text-[15px] mb-2 block">Email</label>
             <div class="relative flex items-center">
-              <input name="email" type="text" required class="w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent pl-4 pr-10 py-3 rounded-md border border-gray-100 focus:border-blue-600 outline-none transition-all" placeholder="Enter email" />
+              <input name="email" type="text" v-model="store.sesion.email" required class="w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent pl-4 pr-10 py-3 rounded-md border border-gray-100 focus:border-blue-600 outline-none transition-all" placeholder="Ingrese su email" />
               <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb" class="w-[18px] h-[18px] absolute right-4" viewBox="0 0 682.667 682.667">
                 <defs>
                   <clipPath id="a" clipPathUnits="userSpaceOnUse">
@@ -29,10 +29,8 @@
           <div class="mt-4">
             <label class="text-gray-800 text-[15px] mb-2 block">Password</label>
             <div class="relative flex items-center">
-              <input name="password" type="password" required class="w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent pl-4 pr-10 py-3 rounded-md border border-gray-100 focus:border-blue-600 outline-none transition-all" placeholder="Enter password" />
-              <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb" class="w-[18px] h-[18px] absolute right-4 cursor-pointer" viewBox="0 0 128 128">
-                <path d="M64 104C22.127 104 1.367 67.496.504 65.943a4 4 0 0 1 0-3.887C1.367 60.504 22.127 24 64 24s62.633 36.504 63.496 38.057a4 4 0 0 1 0 3.887C126.633 67.496 105.873 104 64 104zM8.707 63.994C13.465 71.205 32.146 96 64 96c31.955 0 50.553-24.775 55.293-31.994C114.535 56.795 95.854 32 64 32 32.045 32 13.447 56.775 8.707 63.994zM64 88c-13.234 0-24-10.766-24-24s10.766-24 24-24 24 10.766 24 24-10.766 24-24 24zm0-40c-8.822 0-16 7.178-16 16s7.178 16 16 16 16-7.178 16-16-7.178-16-16-16z" data-original="#000000"></path>
-              </svg>
+              <input name="password" type="password" v-model="store.sesion.password" required class="w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent pl-4 pr-10 py-3 rounded-md border border-gray-100 focus:border-blue-600 outline-none transition-all" placeholder="Ingrese su contraseña" />
+              
             </div>
           </div>
           <div class="mt-8">
@@ -48,24 +46,24 @@
         </div>
       </div>
     </div>
+    <div v-else class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300">
+      <div class="bg-white p-6 rounded-2xl shadow-lg flex flex-col items-center">
+        <svg class="animate-spin h-10 w-10 text-blue-500 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
+          <path d="M12 2a10 10 0 0 1 10 10" stroke-opacity="0.75"></path>
+        </svg>
+        <p class="text-gray-700 font-semibold">Validando sus credenciales</p>
+      </div>
+    </div>
   </template>
   
   <script setup>
   import { ref } from 'vue';
   import { useRouter } from 'vue-router'; // Importa el hook `useRouter`
-  
-  // Estados reactivos para los campos del formulario
-  const email = ref('');
-  const password = ref('');
+  import { useAuthStore } from '@/stores/auth';
   
   // Inicializa el router
   const router = useRouter();
-  
-  const handleSubmit = async () => {
-    // Simula la autenticación y guarda el token en localStorage
-    localStorage.setItem('token', 'fffff');
-  
-    // Redirige a la ruta 'home'
-    router.push('/'); // Asegúrate de que la ruta coincide con la definida en tu router
-  };
+  const store = useAuthStore();
+
   </script>

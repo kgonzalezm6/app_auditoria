@@ -13,6 +13,6 @@ export default defineConfig({
   },
   server: {
     host: true // Esto permite acceder desde otras máquinas
-  }
-  // base : '/GestionServicios/apps/{nombre de tu app separado por guiones medios}'
+  },
+  base : process.env.NODE_ENV === 'production' ? '/auditoria':''
 })
